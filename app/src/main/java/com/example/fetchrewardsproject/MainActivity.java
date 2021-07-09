@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<ItemData> itemDataArrayList;
     public ListViewAdapter listViewAdapter;
     public String url = "https://fetch-hiring.s3.amazonaws.com/hiring.json";
-    private int logoImage = R.drawable.fetchrewards_logo;
+    private int logoImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView= (RecyclerView) findViewById(R.id.listView);
         logo = (ImageView) findViewById(R.id.logo);
+        logoImage = R.drawable.fetchrewards_logo;
         logo.setImageResource(logoImage);
         itemDataArrayList = new ArrayList<>();
 
