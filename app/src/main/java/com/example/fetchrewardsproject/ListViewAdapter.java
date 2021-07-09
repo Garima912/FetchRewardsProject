@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHolder> {
 
+    // initialize the data members and UI elements
     private ArrayList<ItemData> itemDataList;
     private  ArrayList<String>distinct_listIds;
     private HashMap<String,ArrayList<ItemData>> groupedItemsDirectory;
@@ -27,14 +28,17 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
     Activity activity;
 
     ListViewAdapter( Activity activity, ArrayList<ItemData> itemDataList){
+        // assign initial values to the data  members
         this.activity=activity;
         this.itemDataList = itemDataList;
         distinct_listIds = new ArrayList<>();
-        groupedItemsDirectory = new HashMap<>();
+        groupedItemsDirectory = new HashMap<>();  // will map each distinct list id to the list of all the member items
+
         processAndFilterList();
         sortList();
     }
 
+    // helps to filter the list by the names of the items
     static private Comparator<ItemData> sortByName = new Comparator<ItemData>() {
         @Override
         public int compare(ItemData o1, ItemData o2) {
@@ -53,6 +57,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        // create and attach the adapter of the sublist recycler view to be displayed containing all the member items
         Thread myThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -71,6 +76,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         return groupedItemsDirectory.size();
     }
 
+    // This function is responsible for filtering and sorting the list first by list id and then item names
     private void sortList(){
         ArrayList<String> sortedKeys = new ArrayList<>(groupedItemsDirectory.keySet());
         Collections.sort(sortedKeys);
@@ -81,6 +87,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
     }
 
+    // this function is responsible for processing the fetched data, storing, and mapping items to their respective distinct ids
     private void processAndFilterList(){
 
         for(ItemData item: itemDataList){
@@ -90,6 +97,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
         Collections.sort(distinct_listIds);
 
+        // Filter out the items that do not have a name
         for(ItemData item: itemDataList){
             if(!groupedItemsDirectory.containsKey(item.getListId()) && !item.getName().equals("null") && !item.getName().equals("")){
                 ArrayList<ItemData> memberItems = new ArrayList<>();
@@ -107,6 +115,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        //initialize the Ui elements in the recycler view
         protected TextView listId;
         protected RecyclerView listId_items;
 

@@ -29,6 +29,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    // initialize the data members and UI elements
     private RecyclerView listView;
     private ImageView logo;
     private String id, listId, name;
@@ -42,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // assign initial values to the variables
         listView= (RecyclerView) findViewById(R.id.listView);
         logo = (ImageView) findViewById(R.id.logo);
         logoImage = R.drawable.fetchrewards_logo;
         logo.setImageResource(logoImage);
         itemDataArrayList = new ArrayList<>();
 
+        // create a new thread that will fetch data from url without bothering the Main thread
         Thread dataThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // create and attach the Adapter to the Recycler View that displays the data
     private void displayListIdGroups(){
         listViewAdapter = new ListViewAdapter( MainActivity.this,itemDataArrayList);
         listView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         id = responseObject.getString("id");
                         listId = responseObject.getString("listId");
                         name = responseObject.getString("name");
-                        itemDataArrayList.add(new ItemData(listId,id,name));
+                        itemDataArrayList.add(new ItemData(listId,id,name));      // put together the fetched item details, create an object and add it to the list
                         System.out.println("Item Added to List :"+ itemDataArrayList.get(i).getName());
 
                         displayListIdGroups();

@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class SublistViewAdapter extends RecyclerView.Adapter<SublistViewAdapter.ViewHolder> {
 
+    // initialize the data members and UI elements
     private ArrayList<ItemData> itemData;
 
     public SublistViewAdapter( ArrayList<ItemData> itemData) {
         this.itemData = itemData;
-
     }
 
     @NonNull
@@ -25,12 +25,12 @@ public class SublistViewAdapter extends RecyclerView.Adapter<SublistViewAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_id_item,parent,false);
-        System.out.println("Sublist Adapter Created");
         return new SublistViewAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // set the text views to display the item details correctly
         holder.id.setText(itemData.get(position).getId());
         holder.name.setText(itemData.get(position).getName());
     }
@@ -41,6 +41,8 @@ public class SublistViewAdapter extends RecyclerView.Adapter<SublistViewAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        // initialize the Ui elements in the sublist recycler view
         protected TextView id;
         protected  TextView name;
 
